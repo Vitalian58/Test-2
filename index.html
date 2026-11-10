@@ -3,424 +3,749 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DENYE CLOTHING | Cute Kids Apparel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>DENYE CLOTHING | Kids Fashion</title>
   <style>
     :root {
-      --primary: #FFB7B2; /* Pastel Pink */
-      --secondary: #E2F0CB; /* Pastel Green */
-      --accent: #B5EAD7; /* Pastel Mint */
-      --background: #FAFAFA;
-      --text: #555555;
-      --white: #FFFFFF;
+      --pink: #ff8fb8;
+      --lavender: #c4b5fd;
+      --soft-bg: #fdf8fb;
+      --card-bg: #ffffff;
+      --text: #3f2e4d;
+      --muted: #9a8aad;
+      --border: #f0e6f2;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Quicksand', sans-serif;
-      background-color: var(--background);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--soft-bg);
       color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 90px;
     }
 
     header {
-      background-color: var(--white);
-      text-align: center;
-      padding: 2rem 1rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 2px 18px rgba(180, 140, 180, 0.12);
     }
 
-    header h1 {
-      color: #FF9AA2;
-      font-size: 2.5rem;
-      letter-spacing: 2px;
+    .logo {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, #ff8fb8, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    header p {
-      color: #888;
-      font-size: 1.1rem;
-      margin-top: 5px;
+    .logo span {
+      font-size: 0.75rem;
+      display: block;
+      font-weight: 500;
+      color: var(--muted);
+      margin-top: -2px;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 3rem auto;
-      padding: 0 1rem;
+    .cart-btn {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid #ffc2d6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(255, 143, 184, 0.25);
+      transition: transform 0.2s ease;
     }
 
-    .product-grid {
+    .cart-btn:hover { transform: scale(1.07); }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ff5c9a;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+    }
+
+    .filters {
+      padding: 1rem 1rem 0.75rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 72px;
+      z-index: 90;
+    }
+
+    .filters::-webkit-scrollbar { display: none; }
+
+    .filter-list {
+      display: flex;
+      gap: 0.6rem;
+      min-width: max-content;
+      padding-bottom: 0.25rem;
+    }
+
+    .filter-btn {
+      background: #f8f0f5;
+      border: 1.5px solid transparent;
+      color: var(--muted);
+      padding: 0.55rem 1.1rem;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      background: #f3e8f0;
+      color: var(--text);
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, #ff8fb8, #c4b5fd);
+      color: white;
+      box-shadow: 0 4px 12px rgba(255, 143, 184, 0.3);
+    }
+
+    .products-section {
+      padding: 1.25rem 1rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .product-count {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
 
     .product-card {
-      background: var(--white);
-      border-radius: 20px;
+      background: var(--card-bg);
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.05);
-      transition: transform 0.3s ease;
-      text-align: center;
-      padding-bottom: 1.5rem;
+      box-shadow: 0 4px 18px rgba(160, 120, 170, 0.1);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .product-card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 10px 28px rgba(160, 120, 170, 0.16);
     }
 
-    .product-card img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      border-bottom: 5px solid var(--accent);
+    .product-img-wrap {
+      position: relative;
+      aspect-ratio: 1 / 1.05;
+      overflow: hidden;
+      background: #f9f0f5;
     }
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .product-img {
+      transform: scale(1.05);
+    }
+
+    .badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      color: #7c5cbf;
+    }
+
+    .heart-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      transition: transform 0.2s ease;
+      z-index: 5;
+    }
+
+    .heart-btn:hover { transform: scale(1.12); }
+    .heart-btn.liked { background: #fff0f3; }
 
     .product-info {
-      padding: 1.5rem 1rem;
+      padding: 0.85rem 0.9rem 1rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
 
-    .product-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 0.5rem;
+    .product-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+
+    .product-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.55rem;
     }
 
     .product-price {
-      font-size: 1.2rem;
-      color: #FF9AA2;
-      font-weight: 700;
-      margin-bottom: 1rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ff5c9a;
+      margin-bottom: 0.75rem;
     }
 
-    .add-to-cart-btn {
-      background-color: var(--accent);
-      color: #333;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      font-family: 'Quicksand', sans-serif;
-      font-weight: 600;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .add-to-cart-btn:hover {
-      background-color: #9cd4c2;
-    }
-
-    /* Floating Cart Icon */
-    #cart-widget {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background-color: var(--primary);
+    .add-btn {
+      margin-top: auto;
+      background: linear-gradient(135deg, #ff8fb8, #c4b5fd);
       color: white;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.8rem;
-      box-shadow: 0 10px 20px rgba(255, 183, 178, 0.6);
+      border: none;
+      padding: 0.6rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
       cursor: pointer;
-      z-index: 1000;
-      transition: transform 0.3s;
+      width: 100%;
+      transition: all 0.2s ease;
     }
 
-    #cart-widget:hover {
-      transform: scale(1.1);
-    }
-
-    #cart-badge {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background-color: white;
-      color: var(--primary);
-      font-size: 0.9rem;
-      font-weight: 700;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    .add-btn:hover {
+      opacity: 0.92;
+      transform: scale(1.02);
     }
 
     /* Cart Modal */
-    #cart-modal {
-      display: none;
+    .cart-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 2000;
+      inset: 0;
+      background: rgba(50, 30, 70, 0.45);
+      backdrop-filter: blur(5px);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
       justify-content: center;
+    }
+
+    .cart-overlay.active { display: flex; }
+
+    .cart-modal {
+      background: white;
+      width: 100%;
+      max-width: 440px;
+      max-height: 85vh;
+      border-radius: 24px 24px 0 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .cart-header {
+      padding: 1.2rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
       align-items: center;
     }
 
-    .modal-content {
-      background: var(--white);
-      width: 90%;
-      max-width: 500px;
-      border-radius: 20px;
-      padding: 2rem;
-      position: relative;
-    }
+    .cart-header h2 { font-size: 1.25rem; color: #7c5cbf; }
 
-    .close-modal {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 1.5rem;
+    .close-cart {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: #f5eef5;
+      color: var(--muted);
+      font-size: 1.1rem;
       cursor: pointer;
-      color: #888;
     }
 
-    .cart-items-list {
-      list-style: none;
-      margin: 1.5rem 0;
-      max-height: 300px;
+    .cart-body {
+      flex: 1;
       overflow-y: auto;
+      padding: 0.5rem 1.4rem;
     }
 
     .cart-item {
       display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px dashed #ccc;
+      gap: 0.9rem;
+      padding: 1rem 0;
+      border-bottom: 1px dashed var(--border);
+      align-items: center;
     }
 
-    .cart-total {
-      font-size: 1.3rem;
+    .cart-item:last-child { border-bottom: none; }
+
+    .cart-item-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #f9f0f5;
+    }
+
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-weight: 600; font-size: 0.95rem; }
+    .cart-item-qty { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+    .cart-item-price { font-weight: 700; color: #ff5c9a; font-size: 0.95rem; }
+
+    .empty-cart {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+
+    .cart-footer {
+      padding: 1.2rem 1.4rem 1.6rem;
+      border-top: 1px solid var(--border);
+      background: #fdfbfe;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.15rem;
       font-weight: 700;
-      text-align: right;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .checkout-btn {
-      display: block;
       width: 100%;
-      background-color: #25D366; /* WhatsApp Green */
+      background: linear-gradient(135deg, #25D366, #128C7E);
       color: white;
-      text-align: center;
-      padding: 15px;
       border: none;
-      border-radius: 25px;
-      font-size: 1.2rem;
+      padding: 0.95rem;
+      border-radius: 14px;
+      font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
-      font-family: inherit;
-      transition: background-color 0.3s;
+      transition: transform 0.2s ease;
     }
 
-    .checkout-btn:hover {
-      background-color: #1EBE55;
+    .checkout-btn:hover:not(:disabled) { transform: scale(1.02); }
+    .checkout-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #7c5cbf;
+      color: white;
+      padding: 0.75rem 1.4rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      z-index: 300;
+      box-shadow: 0 8px 24px rgba(124, 92, 191, 0.35);
+      transition: transform 0.3s ease;
+      white-space: nowrap;
     }
 
-    .checkout-btn i {
-      margin-right: 8px;
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>DENYE CLOTHING</h1>
-    <p>Cute, Comfy, and Colorful Kids Wear!</p>
+    <div class="logo">
+      DENYE CLOTHING
+      <span>Cute • Soft • Playful</span>
+    </div>
+    <button class="cart-btn" id="openCart" aria-label="Open cart">
+      🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
   </header>
 
-  <div class="container">
-    <div class="product-grid">
-      <!-- Product 1 -->
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1519241047957-be31d7379a5d?auto=format&fit=crop&w=500&q=80" alt="Pastel Romper">
-        <div class="product-info">
-          <h3 class="product-title">Pastel Pink Romper</h3>
-          <p class="product-price">₦8,500</p>
-          <button class="add-to-cart-btn" data-name="Pastel Pink Romper" data-price="8500">Add to Cart</button>
-        </div>
+  <div class="filters">
+    <div class="filter-list" id="filterList">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="boys">Boys</button>
+      <button class="filter-btn" data-filter="girls">Girls</button>
+      <button class="filter-btn" data-filter="0-2">Ages 0-2</button>
+      <button class="filter-btn" data-filter="3-5">Ages 3-5</button>
+      <button class="filter-btn" data-filter="favorites">Favorites ❤️</button>
+    </div>
+  </div>
+
+  <section class="products-section">
+    <div class="section-title">
+      <span>Shop Collection</span>
+      <span class="product-count" id="productCount">10 items</span>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <div class="cart-overlay" id="cartOverlay">
+    <div class="cart-modal">
+      <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button class="close-cart" id="closeCart">✕</button>
       </div>
-      <!-- Product 2 -->
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?auto=format&fit=crop&w=500&q=80" alt="Sunny Day Dress">
-        <div class="product-info">
-          <h3 class="product-title">Sunny Day Dress</h3>
-          <p class="product-price">₦9,000</p>
-          <button class="add-to-cart-btn" data-name="Sunny Day Dress" data-price="9000">Add to Cart</button>
-        </div>
+      <div class="cart-body" id="cartBody">
+        <div class="empty-cart">Your cart is empty 😊</div>
       </div>
-      <!-- Product 3 -->
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=500&q=80" alt="Denim Overalls">
-        <div class="product-info">
-          <h3 class="product-title">Classic Denim Overalls</h3>
-          <p class="product-price">₦12,000</p>
-          <button class="add-to-cart-btn" data-name="Classic Denim Overalls" data-price="12000">Add to Cart</button>
+      <div class="cart-footer">
+        <div class="total-row">
+          <span>Total</span>
+          <span id="cartTotal">₦0</span>
         </div>
-      </div>
-      <!-- Product 4 -->
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1471286174890-9c11241eb436?auto=format&fit=crop&w=500&q=80" alt="Mint Green Onesie">
-        <div class="product-info">
-          <h3 class="product-title">Mint Green Onesie</h3>
-          <p class="product-price">₦5,500</p>
-          <button class="add-to-cart-btn" data-name="Mint Green Onesie" data-price="5500">Add to Cart</button>
-        </div>
-      </div>
-      <!-- Product 5 -->
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?auto=format&fit=crop&w=500&q=80" alt="Polka Dot Shirt">
-        <div class="product-info">
-          <h3 class="product-title">Polka Dot Shirt</h3>
-          <p class="product-price">₦7,000</p>
-          <button class="add-to-cart-btn" data-name="Polka Dot Shirt" data-price="7000">Add to Cart</button>
-        </div>
-      </div>
-      <!-- Product 6 -->
-      <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1522771930-78848d92878d?auto=format&fit=crop&w=500&q=80" alt="Cozy Winter Jacket">
-        <div class="product-info">
-          <h3 class="product-title">Cozy Winter Jacket</h3>
-          <p class="product-price">₦15,000</p>
-          <button class="add-to-cart-btn" data-name="Cozy Winter Jacket" data-price="15000">Add to Cart</button>
-        </div>
+        <button class="checkout-btn" id="checkoutBtn" disabled>
+          Checkout on WhatsApp
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- Floating Cart -->
-  <div id="cart-widget" onclick="toggleCart()">
-    <i class="fas fa-shopping-cart"></i>
-    <span id="cart-badge">0</span>
-  </div>
-
-  <!-- Cart Modal -->
-  <div id="cart-modal">
-    <div class="modal-content">
-      <span class="close-modal" onclick="toggleCart()">&times;</span>
-      <h2>Your Cart</h2>
-      <ul class="cart-items-list" id="cart-items-list">
-        <!-- Items will be injected here via JS -->
-      </ul>
-      <div class="cart-total">
-        Total: ₦<span id="cart-total-price">0</span>
-      </div>
-      <button class="checkout-btn" onclick="checkoutToWhatsApp()">
-        <i class="fab fa-whatsapp"></i> Checkout via WhatsApp
-      </button>
-    </div>
-  </div>
+  <div class="toast" id="toast">Added to cart!</div>
 
   <script>
-    // Cart State
+    // Products using your uploaded images
+    // Make sure the .webp files are in the same folder as this HTML file
+    const products = [
+      {
+        id: 1,
+        name: "Cloud Puffer Jacket",
+        price: 12500,
+        img: "1000036842.webp",
+        gender: "boys",
+        age: "3-5",
+        badge: "Boys"
+      },
+      {
+        id: 2,
+        name: "Classic Denim Overalls",
+        price: 9800,
+        img: "1000036841.webp",
+        gender: "boys",
+        age: "0-2",
+        badge: "Boys"
+      },
+      {
+        id: 3,
+        name: "Striped Tee + Olive Shorts",
+        price: 8500,
+        img: "1000036840.webp",
+        gender: "boys",
+        age: "3-5",
+        badge: "Boys"
+      },
+      {
+        id: 4,
+        name: "Dino Adventure Hoodie",
+        price: 7900,
+        img: "1000036839.webp",
+        gender: "boys",
+        age: "3-5",
+        badge: "Boys"
+      },
+      {
+        id: 5,
+        name: "Rocket Bomber Jacket",
+        price: 11200,
+        img: "1000036837.webp",
+        gender: "boys",
+        age: "3-5",
+        badge: "Boys"
+      },
+      {
+        id: 6,
+        name: "Rainbow Cable Sweater",
+        price: 9500,
+        img: "1000036836.webp",
+        gender: "girls",
+        age: "3-5",
+        badge: "Girls"
+      },
+      {
+        id: 7,
+        name: "Rainy Duck Raincoat",
+        price: 8900,
+        img: "1000036835.webp",
+        gender: "girls",
+        age: "0-2",
+        badge: "Girls"
+      },
+      {
+        id: 8,
+        name: "Blue Tracksuit Set",
+        price: 10500,
+        img: "1000036834.webp",
+        gender: "boys",
+        age: "3-5",
+        badge: "Boys"
+      },
+      {
+        id: 9,
+        name: "Plaid Shirt + Shorts Set",
+        price: 9200,
+        img: "1000036833.webp",
+        gender: "boys",
+        age: "3-5",
+        badge: "Boys"
+      },
+      {
+        id: 10,
+        name: "Blush Floral Dress",
+        price: 8700,
+        img: "1000036838.webp",
+        gender: "girls",
+        age: "0-2",
+        badge: "Girls"
+      }
+    ];
+
     let cart = [];
+    let currentFilter = "all";
+    let likedIds = JSON.parse(localStorage.getItem("denyeLiked") || "[]");
 
-    // Elements
-    const cartBadge = document.getElementById('cart-badge');
-    const cartModal = document.getElementById('cart-modal');
-    const cartItemsList = document.getElementById('cart-items-list');
-    const cartTotalPrice = document.getElementById('cart-total-price');
+    const grid = document.getElementById("productsGrid");
+    const cartCountEl = document.getElementById("cartCount");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const cartBody = document.getElementById("cartBody");
+    const cartTotalEl = document.getElementById("cartTotal");
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    const productCountEl = document.getElementById("productCount");
+    const toast = document.getElementById("toast");
 
-    // Add to Cart Logic
-    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-      button.addEventListener('click', (e) => {
-        const name = e.target.getAttribute('data-name');
-        const price = parseInt(e.target.getAttribute('data-price'));
-        
-        cart.push({ name, price });
-        updateCartUI();
-        
-        // Brief button animation
-        const originalText = e.target.innerText;
-        e.target.innerText = "Added! ✓";
-        e.target.style.backgroundColor = "var(--secondary)";
-        setTimeout(() => {
-          e.target.innerText = originalText;
-          e.target.style.backgroundColor = "var(--accent)";
-        }, 1000);
-      });
-    });
-
-    // Update UI
-    function updateCartUI() {
-      cartBadge.innerText = cart.length;
-      
-      cartItemsList.innerHTML = '';
-      let total = 0;
-      
-      cart.forEach((item, index) => {
-        total += item.price;
-        const li = document.createElement('li');
-        li.className = 'cart-item';
-        li.innerHTML = `
-          <span>${item.name}</span>
-          <span>₦${item.price.toLocaleString()}</span>
-        `;
-        cartItemsList.appendChild(li);
-      });
-
-      if (cart.length === 0) {
-        cartItemsList.innerHTML = '<li>Your cart is empty.</li>';
-      }
-
-      cartTotalPrice.innerText = total.toLocaleString();
+    function saveLikes() {
+      localStorage.setItem("denyeLiked", JSON.stringify(likedIds));
     }
 
-    // Toggle Modal
-    function toggleCart() {
-      if (cartModal.style.display === "flex") {
-        cartModal.style.display = "none";
+    function toggleLike(id, event) {
+      event.stopPropagation();
+      const index = likedIds.indexOf(id);
+      if (index === -1) {
+        likedIds.push(id);
       } else {
-        cartModal.style.display = "flex";
+        likedIds.splice(index, 1);
       }
+      saveLikes();
+      renderProducts();
     }
 
-    // Close modal when clicking outside of it
-    window.onclick = function(event) {
-      if (event.target == cartModal) {
-        cartModal.style.display = "none";
+    function getFilteredProducts() {
+      if (currentFilter === "favorites") {
+        return products.filter(p => likedIds.includes(p.id));
       }
+      if (currentFilter === "boys" || currentFilter === "girls") {
+        return products.filter(p => p.gender === currentFilter);
+      }
+      if (currentFilter === "0-2" || currentFilter === "3-5") {
+        return products.filter(p => p.age === currentFilter);
+      }
+      return products;
     }
 
-    // WhatsApp Checkout Logic
-    function checkoutToWhatsApp() {
-      if (cart.length === 0) {
-        alert("Your cart is empty! Please add some cute clothes first.");
+    function renderProducts() {
+      const filtered = getFilteredProducts();
+      productCountEl.textContent = `\( {filtered.length} item \){filtered.length !== 1 ? "s" : ""}`;
+
+      if (filtered.length === 0) {
+        const msg = currentFilter === "favorites"
+          ? "No favorites yet. Tap the 🤍 on products you love!"
+          : "No products found in this category 😔";
+        grid.innerHTML = `<div class="no-results">${msg}</div>`;
         return;
       }
 
-      let message = "Hello DENYE CLOTHING! 🛍️\nI would like to place an order for:\n\n";
-      let total = 0;
-
-      cart.forEach((item, index) => {
-        message += `${index + 1}. ${item.name} - ₦${item.price.toLocaleString()}\n`;
-        total += item.price;
-      });
-
-      message += `\n*Total: ₦${total.toLocaleString()}*\n\nPlease let me know how to proceed with payment and delivery.`;
-
-      // The provided WhatsApp Number
-      const phoneNumber = "2349157340963"; // Removed leading 0, added 234 country code for Nigeria
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
-      // Open WhatsApp
-      window.open(whatsappUrl, '_blank');
+      grid.innerHTML = filtered.map(p => {
+        const isLiked = likedIds.includes(p.id);
+        return `
+          <article class="product-card">
+            <div class="product-img-wrap">
+              <img src="\( {p.img}" alt=" \){p.name}" class="product-img" loading="lazy">
+              <span class="badge">${p.badge}</span>
+              <button class="heart-btn ${isLiked ? "liked" : ""}" 
+                      onclick="toggleLike(${p.id}, event)"
+                      aria-label="${isLiked ? "Unlike" : "Like"}">
+                ${isLiked ? "❤️" : "🤍"}
+              </button>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">${p.name}</h3>
+              <div class="product-meta">${p.age === "0-2" ? "Ages 0–2" : "Ages 3–5"}</div>
+              <div class="product-price">₦${p.price.toLocaleString()}</div>
+              <button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+            </div>
+          </article>
+        `;
+      }).join("");
     }
+
+    document.getElementById("filterList").addEventListener("click", (e) => {
+      const btn = e.target.closest(".filter-btn");
+      if (!btn) return;
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter;
+      renderProducts();
+    });
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      updateCartUI();
+      showToast(`${product.name} added!`);
+    }
+
+    function updateCartUI() {
+      const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+      cartCountEl.textContent = totalItems;
+
+      if (cart.length === 0) {
+        cartBody.innerHTML = `<div class="empty-cart">Your cart is empty 😊</div>`;
+        cartTotalEl.textContent = "₦0";
+        checkoutBtn.disabled = true;
+        return;
+      }
+
+      cartBody.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="\( {item.img}" alt=" \){item.name}" class="cart-item-img">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-qty">Qty: ${item.qty}</div>
+          </div>
+          <div class="cart-item-price">₦${(item.price * item.qty).toLocaleString()}</div>
+        </div>
+      `).join("");
+
+      const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      cartTotalEl.textContent = `₦${total.toLocaleString()}`;
+      checkoutBtn.disabled = false;
+    }
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+
+    document.getElementById("openCart").addEventListener("click", () => {
+      cartOverlay.classList.add("active");
+    });
+
+    document.getElementById("closeCart").addEventListener("click", () => {
+      cartOverlay.classList.remove("active");
+    });
+
+    cartOverlay.addEventListener("click", (e) => {
+      if (e.target === cartOverlay) cartOverlay.classList.remove("active");
+    });
+
+    checkoutBtn.addEventListener("click", () => {
+      if (cart.length === 0) return;
+
+      let message = `Hi DENYE CLOTHING! 👋\n\nI'd like to order:\n\n`;
+      cart.forEach(item => {
+        message += `• ${item.name} × \( {item.qty} — ₦ \){(item.price * item.qty).toLocaleString()}\n`;
+      });
+      const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      message += `\n*Total: ₦${total.toLocaleString()}*\n\nPlease confirm availability. Thank you! 💕`;
+
+      const encoded = encodeURIComponent(message);
+      window.open(`https://wa.me/09157340963?text=${encoded}`, "_blank");
+    });
+
+    // Initialize
+    renderProducts();
+    updateCartUI();
   </script>
 </body>
 </html>
